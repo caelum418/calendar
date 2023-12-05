@@ -24,11 +24,14 @@ table caption {
     border: 1px solid #ccc;
 }
 
-tr td:nth-child(6) {
-    color: rgb(57, 57, 255);
-}
-
-tr td:last-child {
+tr td:nth-child(1) {
     color: #ff2222;
 }
 
+tr td:last-child {
+    color: rgb(57, 57, 255);
+}
+
+.holiday {
+    color: #ff2222 !important;
+}
