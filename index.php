@@ -17,7 +17,7 @@
             $displayYear = date('Y') + 1;
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $displayYear = isset($_POST["quantity"]) ? intval($_POST["quantity"]) : $displayYear;
+                $displayYear = isset($_POST["year"]) ? intval($_POST["year"]) : $displayYear;
             }
 
             echo "西暦 $displayYear 年のカレンダー";
@@ -28,7 +28,7 @@
     <main>
     <div id="form">
         <form method="post">
-            <input type="number" name="quantity" min="0" max="65535" step="1"> 年へ
+            <input type="number" name="year" min="0" max="65535" step="1"> 年へ
             <button type="submit">Go!</button>
         </form>
     </div>
