@@ -876,6 +876,51 @@
     </div>
     <pre>
     <?php
+    date_default_timezone_set('Asia/Tokyo');
+
+    function addClassHoliday($nMonth, $nDayOfWeek, $nWeek, $month) {
+        if ($nDayOfWeek == "0") {
+            // echo "<script>console.log('振替休日')</script>";
+            echo "<script>document.getElementById('" . $month["$nMonth"] . "').querySelector('#w" . ($nWeek) . " td:nth-child(" . ($nDayOfWeek + 2) . ")').classList.add('holiday');</script>";
+        } else {
+            // echo "<script>console.log('休日')</script>";
+            echo "<script>document.getElementById('" . $month["$nMonth"] . "').querySelector('#w" . $nWeek . " td:nth-child(" . ($nDayOfWeek + 1) . ")').classList.add('holiday');</script>";
+        }
+    }
+
+    function checkHoliday($nMonth, $nDayOfWeek, $nWeek, $nDay, $month) {
+        // echo "<script>console.log('test')</script>";
+        if ($nMonth == "1") {
+            if ($nDay == "1") { // 元日
+                addClassHoliday($nMonth, $nDayOfWeek, $nWeek, $month);
+            } else if ($nDayOfWeek == "1" && intval($nDay) >= 8 && intval($nDay) <= 14) { // 成人の日
+                addClassHoliday($nMonth, $nDayOfWeek, $nWeek, $month);
+            }
+        } else if ($nMonth == "2") {
+            if ($nDay == "11" || $nDay == "23") { // 建国記念の日
+                addClassHoliday($nMonth, $nDayOfWeek, $nWeek, $month);
+            }
+        } else if ($nMonth == "4" && $nDay == "29") { // 昭和の日
+            addClassHoliday($nMonth, $nDayOfWeek, $nWeek, $month);
+        } else if ($nMonth == "5") {
+            if ($nDay == "3" || $nDay == "4" || $nDay == "5") { // 憲法記念日 みどりの日　こどもの日
+                addClassHoliday($nMonth, $nDayOfWeek, $nWeek, $month);
+            }
+        } else if ($nMonth == "7" && $nDayOfWeek == "1" && intval($nDay) >= 15 && intval($nDay) <= 21) { // 海の日
+            addClassHoliday($nMonth, $nDayOfWeek, $nWeek, $month);
+        } else if ($nMonth == "8" && $nDay == "11") { // 山の日
+            addClassHoliday($nMonth, $nDayOfWeek, $nWeek, $month);
+        } else if ($nMonth == "9" && $nDayOfWeek == "1" && intval($nDay) >= 15 && intval($nDay) <= 21) { // 敬老の日
+            addClassHoliday($nMonth, $nDayOfWeek, $nWeek, $month);
+        } else if ($nMonth == "10" && $nDayOfWeek == "1" && intval($nDay) >= 8 && intval($nDay) <= 14) { // スポーツの日
+            addClassHoliday($nMonth, $nDayOfWeek, $nWeek, $month);
+        } else if ($nMonth == "11") { // 文化の日
+            if ($nDay == "3" || $nDay == "23") { // 勤労感謝の日
+                addClassHoliday($nMonth, $nDayOfWeek, $nWeek, $month);
+            }
+        }
+    };
+
     $month = [
         "1" => "jan",
         "2" => "feb",
@@ -907,9 +952,11 @@
         $nDayOfWeek = date("w", $timeStamp);
         $nDay = date("d", $timeStamp);
         $nDay = ltrim($nDay, '0');
-    
+        
+        checkHoliday($nMonth, $nDayOfWeek, $nWeek, $nDay, $month);
+
+        // echo "<script>console.log('" . $nDayOfWeek . " : " .date("l", $timeStamp) . "')</script>";
         echo "<script>document.getElementById('" . $month["$nMonth"] . "').querySelector('#w" . $nWeek . " td:nth-child(" . ($nDayOfWeek + 1) . ")').innerHTML = '" . $nDay . "'</script>";
-        echo "<script>console.log($nDay)</script>";
     }
         ?>
         </pre>
